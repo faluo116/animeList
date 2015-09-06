@@ -22,6 +22,7 @@ function this_week(){
 checkdb();
 $today = today();
 $this_week = this_week();
+$this_week = $this_week == 0 ? 7 : $this_week;
 $week = array('Err','一','二','三','四','五','六','日');
 $housou = array('Err','bilibili','youku','271','letv','sohu','tencent','pptv');
 $db = new Sqlite(TRUE_PATH,'anime.db');
