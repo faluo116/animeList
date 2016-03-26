@@ -5,8 +5,8 @@ require("Sqlite.php");
 function checkdb(){
 	$dbpath = TRUE_PATH . 'anime.db';
 	if (!file_exists($dbpath)){
-		// 建库建表	
-		$ddl_happy = "CREATE TABLE happy (id INTEGER PRIMARY KEY AUTOINCREMENT, a_name VARCHAR(0,255) DEFAULT (''), a_week INTEGER DEFAULT (0), a_count INTEGER DEFAULT (0), a_housou VARCHAR(0,255) DEFAULT (''), a_watch INTEGER DEFAULT (0));";
+		// 建库建表
+		$ddl_happy = "CREATE TABLE happy (id INTEGER PRIMARY KEY AUTOINCREMENT, a_name VARCHAR(0,255) DEFAULT (''), a_week INTEGER DEFAULT (0), a_count INTEGER DEFAULT (0), a_housou VARCHAR(0,255) DEFAULT (''), a_watch INTEGER DEFAULT (0)),a_tag INTEGER DEFAULT (0);";
 		$db = new Sqlite(TRUE_PATH,'anime.db');
 		$db -> query_sql($ddl_happy);
 	}
@@ -24,17 +24,17 @@ $today = today();
 $this_week = this_week();
 $this_week = $this_week == 0 ? 7 : $this_week;
 $week = array('Err','一','二','三','四','五','六','日');
-$housou = array('Err','bilibili','youku','271','letv','sohu','tencent','pptv');
+$housou = array('Err','bilibili','tudou','271','letv','sohu','tencent','pptv');
 $db = new Sqlite(TRUE_PATH,'anime.db');
 if (!empty($_POST['a_n'])){
 	$a_n = $_POST['a_n'];
 	if (!is_null($a_n)){
-		// 添加	
+		// 添加
 		$a_w = $_POST['a_w'];
 		$a_h = $_POST['a_h'];
-		var_dump($a_w);
-		var_dump($a_h);
-		$sql = "insert into happy (a_name,a_week,a_count,a_housou,a_watch) values ('" . $a_n . "'," . $a_w . ",0,'" . $housou[$a_h] . "',0)";
+		// var_dump($a_w);
+		// var_dump($a_h);
+		$sql = "insert into happy (a_name,a_week,a_count,a_housou,a_watch,a_tag) values ('" . $a_n . "'," . $a_w . ",0,'" . $housou[$a_h] . "',0,0)";
 		$db -> query_sql($sql);
 		header("Location:index.php");
 		exit();
@@ -45,6 +45,26 @@ if (!empty($_GET['id'])){
 	if (!is_null($id) && is_numeric($id)){
 		// 标记
 		$sql = "update happy set a_count=a_count+1,a_watch=" . $today . " where id=" . $id;
+		$db -> query_sql($sql);
+		header("Location:index.php");
+		exit();
+	}
+}
+if (!empty($_GET['end'])){
+	$end = $_GET['end'];
+	if (!is_null($end) && is_numeric($end)){
+		// 完结
+		$sql = "update happy set a_tag=99 where id=" . $end;
+		$db -> query_sql($sql);
+		header("Location:index.php");
+		exit();
+	}
+}
+if (!empty($_GET['del'])){
+	$del = $_GET['del'];
+	if (!is_null($del) && is_numeric($del)){
+		// 删除
+		$sql = "update happy set a_tag=10 where id=" . $del;
 		$db -> query_sql($sql);
 		header("Location:index.php");
 		exit();
@@ -65,94 +85,14 @@ if (!empty($_POST['do_sql'])){
 		exit();
 	}
 }
-$happy = $db -> query_sql_result('select * from happy order by a_week');
+$happy = $db -> query_sql_result('select * from happy where a_tag = 0 order by a_week');
 ?>
 <html>
 	<head>
 		<meta charset="UTF-8"/>
 		<title>Anime</title>
 		<link rel="shortcut icon" href="fac.png" />
-		<style>
-			table#order{
-				border:1px;
-				border-style:solid;
-				border-color:#CCCCCC;
-				border-collapse:collapse;
-				color:#000000;
-			}
-			td#otd{
-				border:1px;
-	   			border-style:solid;
-	   			border-color:#CCCCCC;
-	   			letter-spacing:1px;
-				padding:6px;
-			}
-			th#otd{
-				border:1px;
-				color:#000000;
-	  			border-style:solid;
-	  			border-color:#CCCCCC;
-	  			letter-spacing:1px;
-				padding:6px;
-				text-align:center;
-				background-color:#F1F1F1;
-			}
-			tr.hline:hover{
-				background-color:#F1F1F1;
-			}
-			#line{
-				margin-left:1px;
-				margin-right:6px;
-				margin-top:-3px;
-				margin-bottom:3px;
-				border-bottom: 1px solid #BEC0C2;
-			}
-			#title{
-				clear:both;
-				font-weight:bold;
-				font-size:16px;
-				font-family:华文细黑,serif;
-				padding:10px;
-			}
-			#content{
-				padding:10px;
-			}
-			#web{
-				float:left;
-				padding-top:5px;	  
-				padding-right:20px;
-				padding-bottom:5px;
-				padding-left:10px;
-				margin-top:10px;
-			}
-			#alist{
-				padding-top:5px;	  
-				padding-right:20px;
-				padding-bottom:5px;
-				padding-left:10px;
-				margin-top:10px;
-			}
-			a.web:link{
-				color:#666666;
-				text-decoration:none;
-			}
-			a.web:visited{
-				color:#666666;
-				text-decoration:none;
-			}
-			a.web:hover{
-				color:#F05A28;
-				text-decoration:none;
-			}
-			.btn{
-				margin-left:3px;
-				border:1px solid #CCCCCC;
-				background-color:#E2E2E2;
-				font-size:16px;
-				padding:2px;
-				cursor:pointer;
-			}
-		</style>
+		<link href="anime.css" rel="stylesheet"/>
 	</head>
 	<body style="background-color:#E2E2E2;overflow-x:hidden;">
 		<div style="padding:16px;background-color:#FFFFFF;width:900px;height:1000px;margin-left:auto;margin-right:auto;">
@@ -168,6 +108,7 @@ $happy = $db -> query_sql_result('select * from happy order by a_week');
 						echo '<option value="' . $i . '">' . $housou[$i] . '</option>';
 					}
 					?></select><input type="submit" class="btn" value="&nbsp;保&nbsp;存&nbsp;"/>
+					<input type="button" class="btn" value="&nbsp;已&nbsp;完&nbsp;结&nbsp;" onclick="location.href='over.php'"/>
 			</form>
             <table width="100%" id="order" style="margin-top:20px;margin-bottom:20px;">
                 <tr align="left">
@@ -178,6 +119,7 @@ $happy = $db -> query_sql_result('select * from happy order by a_week');
                     <th id="otd">集数</th>
                     <th id="otd">最后观看</th>
                     <th id="otd">放送</th>
+					<th id="otd"></th>
                 </tr>
 			<?php
 				if (!is_null($happy)){
@@ -215,6 +157,9 @@ $happy = $db -> query_sql_result('select * from happy order by a_week');
 						echo '</td>';
 						echo '<td id="otd" align="center">';
 						echo $happy[$i]['a_housou'];
+						echo '</td>';
+						echo '<td id="otd" align="center">';
+						echo '<a href="index.php?end=' . $happy[$i]['id'] . '" class="web">完结</a>&nbsp;&nbsp;<a href="index.php?del=' . $happy[$i]['id'] . '" class="web" onclick="return cofirm(\'真的要删除吗？\')">删除</a>';
 						echo '</td>';
 						echo '</tr>';
 					}
