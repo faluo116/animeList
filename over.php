@@ -3,6 +3,7 @@
 define("TRUE_PATH",__DIR__ . "/");
 require("Sqlite.php");
 require("Page.php");
+require("functions.php");
 function today(){
     date_default_timezone_set('PRC');
 	return date('ymd',time());
@@ -14,8 +15,8 @@ function this_week(){
 $today = today();
 $this_week = this_week();
 $this_week = $this_week == 0 ? 7 : $this_week;
-$week = array('Err','一','二','三','四','五','六','日');
-$housou = array('Err','bilibili','tudou','271','letv','sohu','tencent','pptv');
+$week = get_week();
+$housou = get_housou_info();
 $db = new Sqlite(TRUE_PATH,'anime.db');
 $happy = $db -> query_sql_result('select * from happy where a_tag = 99 order by a_week');
 $pageId = 0;
@@ -48,7 +49,7 @@ if (!is_numeric($pageId)){
 	<body style="background-color:#E2E2E2;overflow-x:hidden;">
 		<div style="padding:16px;background-color:#FFFFFF;width:900px;height:1000px;margin-left:auto;margin-right:auto;">
 			<div style="color:#999999;font-weight:bold;font-size:28px;padding-bottom:16px;">Faluo's Anime Chart</div>
-			<input type="button" class="btn" value="&nbsp;返&nbsp;回&nbsp;" onclick="location.href='index.php'"/>
+			<div style="line-height:50px;float:right;"><input type="button" class="btn" value="&nbsp;返&nbsp;回&nbsp;" onclick="location.href='index.php'"/></div>
             <table width="100%" id="order" style="margin-top:20px;margin-bottom:20px;">
                 <tr align="left">
                     <th id="otd">#</th>
@@ -78,7 +79,7 @@ if (!is_numeric($pageId)){
 					echo $happy[$i]['a_count'];
 					echo '</td>';
 					echo '<td id="otd" align="center">';
-					echo $happy[$i]['a_housou'];
+					echo $housou[$happy[$i]['a_housou']][0];
 					echo '</td>';
 					echo '</tr>';
 				}

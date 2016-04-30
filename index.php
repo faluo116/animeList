@@ -2,6 +2,7 @@
 <?php
 define("TRUE_PATH",__DIR__ . "/");
 require("Sqlite.php");
+require("functions.php");
 function checkdb(){
 	$dbpath = TRUE_PATH . 'anime.db';
 	if (!file_exists($dbpath)){
@@ -23,8 +24,9 @@ checkdb();
 $today = today();
 $this_week = this_week();
 $this_week = $this_week == 0 ? 7 : $this_week;
-$week = array('Err','一','二','三','四','五','六','日');
-$housou = array('Err','bilibili','tudou','271','letv','sohu','tencent','pptv');
+$week = get_week();
+// $housou = get_housou();
+$housou = get_housou_info();
 $db = new Sqlite(TRUE_PATH,'anime.db');
 if (!empty($_POST['a_n'])){
 	$a_n = $_POST['a_n'];
@@ -34,7 +36,7 @@ if (!empty($_POST['a_n'])){
 		$a_h = $_POST['a_h'];
 		// var_dump($a_w);
 		// var_dump($a_h);
-		$sql = "insert into happy (a_name,a_week,a_count,a_housou,a_watch,a_tag) values ('" . $a_n . "'," . $a_w . ",0,'" . $housou[$a_h] . "',0,0)";
+		$sql = "insert into happy (a_name,a_week,a_count,a_housou,a_watch,a_tag) values ('" . $a_n . "'," . $a_w . ",0," . $a_h . ",0,0)";
 		$db -> query_sql($sql);
 		header("Location:index.php");
 		exit();
@@ -97,19 +99,25 @@ $happy = $db -> query_sql_result('select * from happy where a_tag = 0 order by a
 	<body style="background-color:#E2E2E2;overflow-x:hidden;">
 		<div style="padding:16px;background-color:#FFFFFF;width:900px;height:1000px;margin-left:auto;margin-right:auto;">
 			<div style="color:#999999;font-weight:bold;font-size:28px;padding-bottom:16px;">Faluo's Anime Chart</div>
-			<form action="index.php" method="post">
-				<input type="text" id="a_n" name="a_n" style="float:left;width:260px;font-size:18px;border:1px solid #CCCCCC;"/>
-				<select id="a_w" name="a_w" style="font-size:18px;margin-left:3px;"><?php
-					for ($i = 1 ; $i < count($week) ; ++$i){
-						echo '<option value="' . $i . '">' . $week[$i] . '</option>';
-					}
-					?></select><select id="a_h" name="a_h" style="font-size:18px;margin-left:3px;"><?php
-					for ($i = 1 ; $i < count($housou) ; ++$i){
-						echo '<option value="' . $i . '">' . $housou[$i] . '</option>';
-					}
-					?></select><input type="submit" class="btn" value="&nbsp;保&nbsp;存&nbsp;"/>
+			<div style="line-height:50px;">
+				<span style="float:left;">
+					<form action="index.php" method="post">
+						<input type="text" id="a_n" name="a_n" style="width:260px;font-size:18px;border:1px solid #CCCCCC;"/>
+						<select id="a_w" name="a_w" style="font-size:18px;margin-left:3px;"><?php
+							for ($i = 1 ; $i < count($week) ; ++$i){
+								echo '<option value="' . $i . '">' . $week[$i] . '</option>';
+							}
+							?></select><select id="a_h" name="a_h" style="font-size:18px;margin-left:3px;"><?php
+							for ($i = 1 ; $i < count($housou) ; ++$i){
+								echo '<option value="' . $i . '">' . $housou[$i][0] . '</option>';
+							}
+							?></select><input type="submit" class="btn" value="&nbsp;保&nbsp;存&nbsp;"/>
+					</form>
+				</span>
+				<span style="float:right;">
 					<input type="button" class="btn" value="&nbsp;已&nbsp;完&nbsp;结&nbsp;" onclick="location.href='over.php'"/>
-			</form>
+				</span>
+			</div>
             <table width="100%" id="order" style="margin-top:20px;margin-bottom:20px;">
                 <tr align="left">
                     <th id="otd">#</th>
@@ -156,7 +164,8 @@ $happy = $db -> query_sql_result('select * from happy where a_tag = 0 order by a
 						echo $happy[$i]['a_watch'];
 						echo '</td>';
 						echo '<td id="otd" align="center">';
-						echo $happy[$i]['a_housou'];
+						// 放送
+						echo $housou[$happy[$i]['a_housou']][0];
 						echo '</td>';
 						echo '<td id="otd" align="center">';
 						echo '<a href="index.php?end=' . $happy[$i]['id'] . '" class="web">完结</a>&nbsp;&nbsp;<a href="index.php?del=' . $happy[$i]['id'] . '" class="web" onclick="return cofirm(\'真的要删除吗？\')">删除</a>';
