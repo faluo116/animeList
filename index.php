@@ -7,7 +7,7 @@ function checkdb(){
 	$dbpath = TRUE_PATH . 'anime.db';
 	if (!file_exists($dbpath)){
 		// 建库建表
-		$ddl_happy = "CREATE TABLE happy (id INTEGER PRIMARY KEY AUTOINCREMENT, a_name VARCHAR(0,255) DEFAULT (''), a_week INTEGER DEFAULT (0), a_count INTEGER DEFAULT (0), a_housou VARCHAR(0,255) DEFAULT (''), a_watch INTEGER DEFAULT (0)),a_tag INTEGER DEFAULT (0);";
+		$ddl_happy = "CREATE TABLE happy (id INTEGER PRIMARY KEY AUTOINCREMENT, a_name VARCHAR(0,255) DEFAULT (''), a_week INTEGER DEFAULT (0), a_count INTEGER DEFAULT (0), a_housou INTEGER DEFAULT (0), a_watch INTEGER DEFAULT (0)),a_tag INTEGER DEFAULT (0);";
 		$db = new Sqlite(TRUE_PATH,'anime.db');
 		$db -> query_sql($ddl_happy);
 	}
@@ -133,7 +133,7 @@ $happy = $db -> query_sql_result('select * from happy where a_tag = 0 order by a
 				if (!is_null($happy)){
 					$c = count($happy);
 					for ($i = 0 ; $i < $c ; ++$i){
-						echo '<tr class="hline">';
+						echo '<tr class="hline" style="line-height:30px;">';
 						echo '<td id="otd" align="center">';
 						echo $i + 1;
 						echo '</td>';

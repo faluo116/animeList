@@ -65,7 +65,7 @@ if (!is_numeric($pageId)){
                     $e = $c;
                 }
 				for ($i = $s ; $i < $e ; ++$i){
-					echo '<tr class="hline">';
+					echo '<tr class="hline" style="line-height:30px;">';
 					echo '<td id="otd" align="center">';
 					echo $i + 1;
 					echo '</td>';

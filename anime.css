@@ -70,10 +70,10 @@ a.web:hover{
     text-decoration:none;
 }
 .btn{
-    margin-left:3px;
+    margin-left:6px;
     border:1px solid #CCCCCC;
     background-color:#E2E2E2;
     font-size:16px;
-    padding:2px;
+    padding:6px;
     cursor:pointer;
 }
