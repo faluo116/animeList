@@ -80,7 +80,7 @@ $housou = get_housou_info();
 				<div style="height:50px;">
 					<div id="form_title">放送:</div>
 					<div id="form_content">
-						<select data-placeholder="放送" name="a_housou" id="a_housou" class="chzn-select" style="width:300px;">
+						<select data-placeholder="放送" name="a_housou" id="a_housou" class="chzn-select" style="width:310px;">
 							<option value=""></option>
 							<?php
 								for($i = 1 ; $i < count($housou) ; ++$i){
@@ -97,7 +97,7 @@ $housou = get_housou_info();
 				<div style="height:50px;">
 					<div id="form_title">周:</div>
 					<div id="form_content">
-						<select data-placeholder="周" name="a_week" id="a_week" class="chzn-select" style="width:300px;">
+						<select data-placeholder="周" name="a_week" id="a_week" class="chzn-select" style="width:310px;">
 							<option value=""></option>
 							<?php
 								for($i = 1 ; $i < count($week) ; ++$i){
