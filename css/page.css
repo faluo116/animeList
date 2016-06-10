@@ -1,0 +1,33 @@
+span.normal{
+	display:inline-block;
+	background-color:#FFFFFF;
+	border:0px solid #000000;
+	color:#000000;
+	font-size:16px;
+	text-align:center;
+	/*padding-top:12px;*/
+	padding-top:6px;
+	width:26px;
+	height:22px;
+	margin:3px;
+}
+
+span.right_now{
+	display:inline-block;
+	color:#FFFFFF;
+	background-color:#000000;
+	border:0px solid #000000;
+	font-size:16px;
+	text-align:center;
+	/*padding-top:12px;*/
+	padding-top:6px;
+	width:26px;
+	height:22px;
+	margin:3px;
+}
+
+span#page:hover{
+	cursor:pointer;
+	background-color:#363636;
+	color:#FFFFFF;
+}

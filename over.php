@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <?php
 define("TRUE_PATH",__DIR__ . "/");
-require("Sqlite.php");
-require("Page.php");
+require("core/Sqlite.php");
+require("core/Page.php");
 require("functions.php");
 function today(){
     date_default_timezone_set('PRC');
@@ -43,8 +43,8 @@ if (!is_numeric($pageId)){
 		<meta charset="UTF-8"/>
 		<title>Anime</title>
 		<link rel="shortcut icon" href="fac.png"/>
-		<link href="anime.css" rel="stylesheet"/>
-        <link href="page.css" rel="stylesheet"/>
+		<link href="css/anime.css" rel="stylesheet"/>
+        <link href="css/page.css" rel="stylesheet"/>
 	</head>
 	<body style="background-color:#E2E2E2;overflow-x:hidden;">
 		<div style="padding:16px;background-color:#FFFFFF;width:900px;height:1000px;margin-left:auto;margin-right:auto;">
@@ -65,7 +65,7 @@ if (!is_numeric($pageId)){
                     $e = $c;
                 }
 				for ($i = $s ; $i < $e ; ++$i){
-					echo '<tr class="hline" style="line-height:30px;">';
+					echo '<tr class="hline">';
 					echo '<td id="otd" align="center">';
 					echo $i + 1;
 					echo '</td>';

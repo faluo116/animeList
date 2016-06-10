@@ -18,4 +18,15 @@ function get_housou_info(){
         7 => array('PPTV','')
     );
 }
+
+function to_chinese_date($d){
+    $month = substr($d,2,2);
+    $date = substr($d,4,2);
+    return $month . "月" . $date . "日";
+}
+
+function back(){
+    header("Location:index.php");
+	exit();
+}
 ?>

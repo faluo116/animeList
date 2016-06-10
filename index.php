@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <?php
 define("TRUE_PATH",__DIR__ . "/");
-require("Sqlite.php");
+require("core/Sqlite.php");
 require("functions.php");
 function checkdb(){
 	$dbpath = TRUE_PATH . 'anime.db';
 	if (!file_exists($dbpath)){
 		// 建库建表
-		$ddl_happy = "CREATE TABLE happy (id INTEGER PRIMARY KEY AUTOINCREMENT, a_name VARCHAR(0,255) DEFAULT (''), a_week INTEGER DEFAULT (0), a_count INTEGER DEFAULT (0), a_housou INTEGER DEFAULT (0), a_watch INTEGER DEFAULT (0)),a_tag INTEGER DEFAULT (0);";
+		$ddl_happy = "CREATE TABLE happy (id INTEGER PRIMARY KEY AUTOINCREMENT, 
+		a_name VARCHAR(0,255) DEFAULT (''), 
+		a_week INTEGER DEFAULT (0), 
+		a_count INTEGER DEFAULT (0), 
+		a_housou VARCHAR(0,255) DEFAULT (''), 
+		a_watch INTEGER DEFAULT (0)),
+		a_tag INTEGER DEFAULT (0),
+		a_yandere_tag TEXT DEFAULT (''),
+		a_first INTEGER DEFAULT (0),
+		a_step INTEGER DEFAULT (0),
+		a_content TEXT DEFAULT (''),
+		a_cover_img TEXT DEFAULT ('')";
 		$db = new Sqlite(TRUE_PATH,'anime.db');
 		$db -> query_sql($ddl_happy);
 	}
@@ -36,7 +47,7 @@ if (!empty($_POST['a_n'])){
 		$a_h = $_POST['a_h'];
 		// var_dump($a_w);
 		// var_dump($a_h);
-		$sql = "insert into happy (a_name,a_week,a_count,a_housou,a_watch,a_tag) values ('" . $a_n . "'," . $a_w . ",0," . $a_h . ",0,0)";
+		$sql = "INSERT INTO happy (a_name,a_week,a_count,a_housou,a_watch,a_tag,a_yandere_tag,a_first,a_step,a_content,a_cover_img) VALUES ('" . $a_n . "'," . $a_w . ",0," . $a_h . ",0,0,'',160601,7,'','')";
 		$db -> query_sql($sql);
 		header("Location:index.php");
 		exit();
@@ -46,27 +57,7 @@ if (!empty($_GET['id'])){
 	$id = $_GET['id'];
 	if (!is_null($id) && is_numeric($id)){
 		// 标记
-		$sql = "update happy set a_count=a_count+1,a_watch=" . $today . " where id=" . $id;
-		$db -> query_sql($sql);
-		header("Location:index.php");
-		exit();
-	}
-}
-if (!empty($_GET['end'])){
-	$end = $_GET['end'];
-	if (!is_null($end) && is_numeric($end)){
-		// 完结
-		$sql = "update happy set a_tag=99 where id=" . $end;
-		$db -> query_sql($sql);
-		header("Location:index.php");
-		exit();
-	}
-}
-if (!empty($_GET['del'])){
-	$del = $_GET['del'];
-	if (!is_null($del) && is_numeric($del)){
-		// 删除
-		$sql = "update happy set a_tag=10 where id=" . $del;
+		$sql = "UPDATE happy SET a_count=a_count+1,a_watch=" . $today . " WHERE id=" . $id;
 		$db -> query_sql($sql);
 		header("Location:index.php");
 		exit();
@@ -78,7 +69,7 @@ if (!empty($_POST['do_sql'])){
 		// 直接执行SQL
 		if ('clear' == $do_sql){
 			// 彻底清表
-			$db -> query_sql('delete from happy');
+			$db -> query_sql('DELETE FROM happy');
 			// $db -> query_sql('update sqlite_sequence set seq=0 where name=\'happy\'');
 		} else {
 			$db -> query_sql($do_sql);
@@ -87,22 +78,22 @@ if (!empty($_POST['do_sql'])){
 		exit();
 	}
 }
-$happy = $db -> query_sql_result('select * from happy where a_tag = 0 order by a_week');
+$happy = $db -> query_sql_result('SELECT * FROM happy WHERE a_tag = 0 ORDER BY a_week');
 ?>
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Anime</title>
+		<title>我的番组</title>
 		<link rel="shortcut icon" href="fac.png" />
-		<link href="anime.css" rel="stylesheet"/>
+		<link href="css/anime.css" rel="stylesheet"/>
 	</head>
 	<body style="background-color:#E2E2E2;overflow-x:hidden;">
 		<div style="padding:16px;background-color:#FFFFFF;width:900px;height:1000px;margin-left:auto;margin-right:auto;">
-			<div style="color:#999999;font-weight:bold;font-size:28px;padding-bottom:16px;">Faluo's Anime Chart</div>
+			<div style="color:#999999;font-weight:bold;font-size:28px;padding-bottom:16px;">Faluo's BannguMi Chart</div>
 			<div style="line-height:50px;">
 				<span style="float:left;">
 					<form action="index.php" method="post">
-						<input type="text" id="a_n" name="a_n" style="width:260px;font-size:18px;border:1px solid #CCCCCC;"/>
+						<input type="text" id="a_n" name="a_n" class="inbox"/>
 						<select id="a_w" name="a_w" style="font-size:18px;margin-left:3px;"><?php
 							for ($i = 1 ; $i < count($week) ; ++$i){
 								echo '<option value="' . $i . '">' . $week[$i] . '</option>';
@@ -121,7 +112,6 @@ $happy = $db -> query_sql_result('select * from happy where a_tag = 0 order by a
             <table width="100%" id="order" style="margin-top:20px;margin-bottom:20px;">
                 <tr align="left">
                     <th id="otd">#</th>
-                    <th id="otd">ID</th>
                     <th id="otd">名称</th>
                     <th id="otd">周</th>
                     <th id="otd">集数</th>
@@ -133,12 +123,9 @@ $happy = $db -> query_sql_result('select * from happy where a_tag = 0 order by a
 				if (!is_null($happy)){
 					$c = count($happy);
 					for ($i = 0 ; $i < $c ; ++$i){
-						echo '<tr class="hline" style="line-height:30px;">';
+						echo '<tr class="hline">';
 						echo '<td id="otd" align="center">';
 						echo $i + 1;
-						echo '</td>';
-						echo '<td id="otd" align="center">';
-						echo $happy[$i]['id'];
 						echo '</td>';
 						echo '<td id="otd" align="left">';
 						if ($this_week == $happy[$i]['a_week']){
@@ -161,14 +148,14 @@ $happy = $db -> query_sql_result('select * from happy where a_tag = 0 order by a
 						echo '<a href="index.php?id=' . $happy[$i]['id'] . '" class="web">' . $happy[$i]['a_count'] . '</a>';
 						echo '</td>';
 						echo '<td id="otd" align="center">';
-						echo $happy[$i]['a_watch'];
+						echo to_chinese_date($happy[$i]['a_watch']);
 						echo '</td>';
 						echo '<td id="otd" align="center">';
 						// 放送
 						echo $housou[$happy[$i]['a_housou']][0];
 						echo '</td>';
 						echo '<td id="otd" align="center">';
-						echo '<a href="index.php?end=' . $happy[$i]['id'] . '" class="web">完结</a>&nbsp;&nbsp;<a href="index.php?del=' . $happy[$i]['id'] . '" class="web" onclick="return cofirm(\'真的要删除吗？\')">删除</a>';
+						echo '<a href="info.php?id=' . $happy[$i]['id'] . '" class="web">详情</a>&nbsp;&nbsp;<a href="modify.php?id=' . $happy[$i]['id'] . '" class="web">修改</a>';
 						echo '</td>';
 						echo '</tr>';
 					}
@@ -176,7 +163,7 @@ $happy = $db -> query_sql_result('select * from happy where a_tag = 0 order by a
 			?>
 			</table>
 			<form action="index.php" method="post">
-				<input type="text" id="do_sql" name="do_sql" style="float:left;width:260px;font-size:18px;border:1px solid #CCCCCC;" />
+				<input type="text" id="do_sql" name="do_sql" class="inbox" />
 				<input type="submit" class="btn" value="&nbsp;执&nbsp;行&nbsp;"/>
 			</form>
 		</div>

@@ -1,0 +1,133 @@
+/*
+	glDatePicker datep style
+
+	http://code.gautamlad.com/glDatePicker/
+	https://github.com/glad/glDatePicker/
+*/
+
+/* Calendar container div */
+.gldp-datep
+{
+	float:left;
+	font-family:"trebuchet ms" !important;
+	background-color:#E8EEF7 !important;
+	font-size:0.8em !important;
+	border:solid 1px #7D99C4;
+}
+
+/* Table style */
+.gldp-datep table
+{
+	border-spacing:1px;
+	border-collapse:inherit;
+}
+
+/* Default row height */
+.gldp-datep tr
+{
+	line-height:28px;
+}
+
+/* Default style of cell */
+.gldp-datep td
+{
+	margin:0;
+	padding:0;
+	width:33px;
+	text-align:center;
+}
+
+/* Previous and Next arrows */
+.gldp-datep-prevnext
+{
+	font-family:"times new roman";
+	color:#222;
+	cursor:pointer;
+	font-weight:bold;
+}
+
+/* Month Year title */
+.gldp-datep-monyear
+{
+	color:#222;
+	font-size:0.9em !important;
+	font-weight:bold;
+}
+
+/* Days of the week (Sun, Mon, ...) */
+.gldp-datep-dow
+{
+	background-color:#7D99C4;
+	color:#eee;
+	font-size:0.8em !important;
+	font-weight:bold;
+}
+
+/* Selectable days */
+.gldp-datep-day
+{
+	background-color:#fff;
+	color:#222;
+	border:solid 1px #fff;
+	font-weight:bold;
+}
+.gldp-datep-day-hover
+{
+	background-color:#fff;
+	color:#7D99C4;
+	border:solid 1px #7D99C4;
+	cursor:pointer;
+	font-weight:bold;
+}
+
+/* Selected days */
+.gldp-datep-selected
+{
+	background-color:#E8EEF7;
+	color:#7D99C4;
+	font-weight:bold;	  
+	border:solid 1px #7D99C4;
+}
+
+/* Today */
+.gldp-datep-today
+{
+	background-color:#7D99C4;
+	color:#fff;
+	border:solid 1px #7D99C4;
+	font-weight:bold;
+}
+.gldp-datep-today-hover
+{
+	background-color:#fff;
+	color:#7D99C4;
+	border:solid 1px #7D99C4;
+	cursor:pointer;
+	font-weight:bold;
+}
+
+/* Weekends */
+.gldp-datep-sat, .gldp-datep-sun
+{
+	background-color:#fff;
+	color:#7D99C4;
+	border:solid 1px #fff;
+	font-weight:bold;
+}
+.gldp-datep-sat-hover, .gldp-datep-sun-hover
+{
+	background-color:#fff;
+	color:#7D99C4;
+	border:solid 1px #7D99C4;
+	cursor:pointer;
+	font-weight:bold;
+}
+
+/* Non-selectable day.  Includes:previous/next month days and days that fall in the allowOld and endDate conditions */
+.gldp-datep-noday
+{
+	background-color:#fff;
+	border:solid 1px #fff;
+	color:#666;
+	cursor:wait;
+}

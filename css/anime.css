@@ -1,0 +1,126 @@
+table#order{
+    border:1px;
+    border-style:solid;
+    border-color:#CCCCCC;
+    border-collapse:collapse;
+    color:#000000;
+}
+td#otd{
+    border:1px;
+    border-style:solid;
+    border-color:#CCCCCC;
+    letter-spacing:1px;
+    padding:6px;
+}
+th#otd{
+    border:1px;
+    color:#000000;
+    border-style:solid;
+    border-color:#CCCCCC;
+    letter-spacing:1px;
+    padding:6px;
+    text-align:center;
+    background-color:#F1F1F1;
+}
+tr.hline:hover{
+    background-color:#F1F1F1;
+}
+#line{
+    margin-left:1px;
+    margin-right:6px;
+    margin-top:-3px;
+    margin-bottom:3px;
+    border-bottom: 1px solid #BEC0C2;
+}
+#title{
+    clear:both;
+    font-weight:bold;
+    font-size:16px;
+    font-family:华文细黑,serif;
+    padding:10px;
+}
+#content{
+    padding:10px;
+}
+#web{
+    float:left;
+    padding-top:5px;
+    padding-right:20px;
+    padding-bottom:5px;
+    padding-left:10px;
+    margin-top:10px;
+}
+#alist{
+    padding-top:5px;
+    padding-right:20px;
+    padding-bottom:5px;
+    padding-left:10px;
+    margin-top:10px;
+}
+a.web:link{
+    color:#666666;
+    text-decoration:none;
+}
+a.web:visited{
+    color:#666666;
+    text-decoration:none;
+}
+a.web:hover{
+    color:#F05A28;
+    text-decoration:none;
+}
+.btn{
+    margin-left:3px;
+    border:1px solid #CCCCCC;
+    background-color:#E2E2E2;
+    font-size:16px;
+    padding:6px 10px 6px 10px;
+    cursor:pointer;
+}
+.btn_warning{
+    margin-left:3px;
+    border:1px solid #CCCCCC;
+    background-color:#FF0000;
+    color:#FFFFFF;
+    font-size:16px;
+    padding:6px 10px 6px 10px;
+    cursor:pointer;
+}
+.btn_submit{
+    margin-left:3px;
+    border:1px solid #CCCCCC;
+    background-color:#F05A28;
+    color:#FFFFFF;
+    font-size:16px;
+    font-style:bold;
+    padding:6px 10px 6px 10px;
+    cursor:pointer;
+}
+#div_form{
+    margin:16px;
+    line-height:50px;
+    font-size:20px;
+}
+input.inbox{
+    width:360px;
+    height:28px;
+    font-size:18px;
+    border:1px solid #CCCCCC;
+}
+input.form_inbox{
+    width:300px;
+    height:30px;
+    font-size:20px;
+    padding-left:6px;
+    border:1px solid #CCCCCC;
+}
+#form_title{
+    float:left;
+    width:120px;
+    text-align:right;
+}
+#form_content{
+    float:left;
+    width:300px;
+    margin-left:6px;
+}
