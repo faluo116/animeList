@@ -47,10 +47,9 @@ if (!empty($_POST['a_n'])){
 		$a_h = $_POST['a_h'];
 		// var_dump($a_w);
 		// var_dump($a_h);
-		$sql = "INSERT INTO happy (a_name,a_week,a_count,a_housou,a_watch,a_tag,a_yandere_tag,a_first,a_step,a_content,a_cover_img) VALUES ('" . $a_n . "'," . $a_w . ",0," . $a_h . ",0,0,'',160601,7,'','')";
+		$sql = "INSERT INTO happy (a_name,a_week,a_count,a_housou,a_watch,a_tag,a_yandere_tag,a_first,a_step,a_content,a_cover_img) VALUES ('" . $a_n . "'," . $a_w . ",0," . $a_h . ",0,0,'',0,7,'','')";
 		$db -> query_sql($sql);
-		header("Location:index.php");
-		exit();
+		back();
 	}
 }
 if (!empty($_GET['id'])){
@@ -59,8 +58,7 @@ if (!empty($_GET['id'])){
 		// 标记
 		$sql = "UPDATE happy SET a_count=a_count+1,a_watch=" . $today . " WHERE id=" . $id;
 		$db -> query_sql($sql);
-		header("Location:index.php");
-		exit();
+		back();
 	}
 }
 if (!empty($_POST['do_sql'])){
@@ -74,8 +72,7 @@ if (!empty($_POST['do_sql'])){
 		} else {
 			$db -> query_sql($do_sql);
 		}
-		header("Location:index.php");
-		exit();
+		back();
 	}
 }
 $happy = $db -> query_sql_result('SELECT * FROM happy WHERE a_tag = 0 ORDER BY a_week');
@@ -85,7 +82,11 @@ $happy = $db -> query_sql_result('SELECT * FROM happy WHERE a_tag = 0 ORDER BY a
 		<meta charset="UTF-8"/>
 		<title>我的番组</title>
 		<link rel="shortcut icon" href="fac.png" />
+		<script src="js/jquery.js" type="text/javascript"></script>
+		<script src="js/chosen.js" type="text/javascript"></script>
+		<script src="js/anime.js" type="text/javascript"></script>
 		<link href="css/anime.css" rel="stylesheet"/>
+		<link href="css/chosen.css" rel="stylesheet"/>
 	</head>
 	<body style="background-color:#E2E2E2;overflow-x:hidden;">
 		<div style="padding:16px;background-color:#FFFFFF;width:900px;height:1000px;margin-left:auto;margin-right:auto;">
@@ -94,15 +95,22 @@ $happy = $db -> query_sql_result('SELECT * FROM happy WHERE a_tag = 0 ORDER BY a
 				<span style="float:left;">
 					<form action="index.php" method="post">
 						<input type="text" id="a_n" name="a_n" class="inbox"/>
-						<select id="a_w" name="a_w" style="font-size:18px;margin-left:3px;"><?php
-							for ($i = 1 ; $i < count($week) ; ++$i){
-								echo '<option value="' . $i . '">' . $week[$i] . '</option>';
-							}
-							?></select><select id="a_h" name="a_h" style="font-size:18px;margin-left:3px;"><?php
-							for ($i = 1 ; $i < count($housou) ; ++$i){
-								echo '<option value="' . $i . '">' . $housou[$i][0] . '</option>';
-							}
-							?></select><input type="submit" class="btn" value="&nbsp;保&nbsp;存&nbsp;"/>
+						<select data-placeholder="周" name="a_w" id="a_w" class="chzn-select" style="width:100px;">
+							<option value=""></option>
+							<?php
+								for($i = 1 ; $i < count($week) ; ++$i){
+									echo "<option value=" . $i . ">" . $week[$i] . "</option>";
+								}
+							?>
+						</select>
+						<select data-placeholder="放送" name="a_h" id="a_h" class="chzn-select" style="width:100px;height:100px;">
+							<option value=""></option>
+							<?php
+								for($i = 1 ; $i < count($housou) ; ++$i){
+									echo "<option value=" . $i . ">" . $housou[$i][0] . "</option>";
+								}
+							?>
+						</select><input type="submit" class="btn" value="&nbsp;保&nbsp;存&nbsp;"/>
 					</form>
 				</span>
 				<span style="float:right;">
@@ -169,4 +177,5 @@ $happy = $db -> query_sql_result('SELECT * FROM happy WHERE a_tag = 0 ORDER BY a
 		</div>
 		<div style="width:100%;text-align:center;padding:10px;color:#999999;">copyright:faluo[2015]</div>
 	</body>
+	<script type="text/javascript"> $(".chzn-select").chosen({disable_search:true}); </script>
 </html>

@@ -107,7 +107,7 @@ $housou = get_housou_info();
 										echo "<option value=" . $i . ">" . $week[$i] . "</option>";
 									}
 								}
-							?>>
+							?>
 						</select>
 					</div>
 				</div>
