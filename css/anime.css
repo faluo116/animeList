@@ -108,6 +108,7 @@ input.inbox{
     border:1px solid #CCCCCC;
 }
 input.form_inbox{
+    position:relative;
     width:300px;
     height:30px;
     font-size:20px;
@@ -123,4 +124,5 @@ input.form_inbox{
     float:left;
     width:300px;
     margin-left:6px;
+    height:auto;
 }

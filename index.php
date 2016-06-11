@@ -90,7 +90,7 @@ $happy = $db -> query_sql_result('SELECT * FROM happy WHERE a_tag = 0 ORDER BY a
 	</head>
 	<body style="background-color:#E2E2E2;overflow-x:hidden;">
 		<div style="padding:16px;background-color:#FFFFFF;width:900px;height:1000px;margin-left:auto;margin-right:auto;">
-			<div style="color:#999999;font-weight:bold;font-size:28px;padding-bottom:16px;">Faluo's BannguMi Chart</div>
+			<div style="color:#999999;font-weight:bold;font-size:28px;padding-bottom:16px;"><?php echo title();?></div>
 			<div style="line-height:50px;">
 				<span style="float:left;">
 					<form action="index.php" method="post">
@@ -106,7 +106,7 @@ $happy = $db -> query_sql_result('SELECT * FROM happy WHERE a_tag = 0 ORDER BY a
 						<select data-placeholder="放送" name="a_h" id="a_h" class="chzn-select" style="width:100px;height:100px;">
 							<option value=""></option>
 							<?php
-								for($i = 1 ; $i < count($housou) ; ++$i){
+								for($i = 1 ; $i <= count($housou) ; ++$i){
 									echo "<option value=" . $i . ">" . $housou[$i][0] . "</option>";
 								}
 							?>
@@ -163,7 +163,7 @@ $happy = $db -> query_sql_result('SELECT * FROM happy WHERE a_tag = 0 ORDER BY a
 						echo $housou[$happy[$i]['a_housou']][0];
 						echo '</td>';
 						echo '<td id="otd" align="center">';
-						echo '<a href="info.php?id=' . $happy[$i]['id'] . '" class="web">详情</a>&nbsp;&nbsp;<a href="modify.php?id=' . $happy[$i]['id'] . '" class="web">修改</a>';
+						echo '<a href="info.php?id=' . $happy[$i]['id'] . '" class="web" target="_blank">详情</a>&nbsp;&nbsp;<a href="modify.php?id=' . $happy[$i]['id'] . '" class="web">修改</a>';
 						echo '</td>';
 						echo '</tr>';
 					}

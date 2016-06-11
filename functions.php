@@ -15,7 +15,8 @@ function get_housou_info(){
         4 => array('乐视',''),
         5 => array('搜狐视频',''),
         6 => array('腾讯视频',''),
-        7 => array('PPTV','')
+        7 => array('PPTV',''),
+        8 => array('无[补录]','')
     );
 }
 
@@ -28,5 +29,9 @@ function to_chinese_date($d){
 function back(){
     header("Location:index.php");
 	exit();
+}
+
+function title(){
+    return "Faluo's Bangumi Chart";
 }
 ?>

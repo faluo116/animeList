@@ -62,7 +62,7 @@ $housou = get_housou_info();
 	</head>
 	<body style="background-color:#E2E2E2;overflow-x:hidden;">
 		<div style="padding:16px;background-color:#FFFFFF;width:900px;height:1000px;margin-left:auto;margin-right:auto;">
-			<div style="color:#999999;font-weight:bold;font-size:28px;padding-bottom:16px;">Faluo's BannguMi Chart</div>
+			<div style="color:#999999;font-weight:bold;font-size:28px;padding-bottom:16px;"><?php echo title();?></div>
 			<div style="line-height:50px;">
 				<span style="float:right;">
 					<input type="button" class="btn_warning" value="&nbsp;关&nbsp;闭&nbsp;" onclick="location.href='modify.php?id=<?php echo $id;?>&over=1'"/>
@@ -83,7 +83,7 @@ $housou = get_housou_info();
 						<select data-placeholder="放送" name="a_housou" id="a_housou" class="chzn-select" style="width:310px;">
 							<option value=""></option>
 							<?php
-								for($i = 1 ; $i < count($housou) ; ++$i){
+								for($i = 1 ; $i <= count($housou) ; ++$i){
 									if ($happy[0]['a_housou'] == $i){
 										echo "<option value=" . $i . " selected>" . $housou[$i][0] . "</option>";
 									} else {
@@ -116,10 +116,6 @@ $housou = get_housou_info();
 					<div id="form_content"><input type="text" id="a_count" name="a_count" value="<?php echo $happy[0]['a_count']?>" class="form_inbox" placeholder="当前集数"/></div>
 				</div>
 				<div style="height:50px;">
-					<div id="form_title">yande.re:</div>
-					<div id="form_content"><input type="text" id="a_yandere" name="a_yandere" value="<?php echo $happy[0]['a_yandere_tag']?>" class="form_inbox" placeholder="yande.re图床标签"/></div>
-				</div>
-				<div style="height:50px;">
 					<div id="form_title">首播日:</div>
 					<div id="form_content"><input type="text" id="a_first" name="a_first" value="<?php echo $happy[0]['a_first']?>" class="form_inbox" placeholder="第一集播出日期"/></div>
 				</div>
@@ -129,7 +125,11 @@ $housou = get_housou_info();
 				</div>
 				<div style="height:50px;">
 					<div id="form_title">图片:</div>
-					<div id="form_content"><input type="text" id="a_cover_img" name="a_cover_img" value="<?php echo $happy[0]['a_cover_img']?>" class="form_inbox" placeholder="封面图"/></div>
+					<div id="form_content"><input type="text" id="a_cover_img" name="a_cover_img" value="<?php echo $happy[0]['a_cover_img']?>" class="form_inbox" placeholder="封面图260X350"/></div>
+				</div>
+				<div style="height:50px;">
+					<div id="form_title">yande.re:</div>
+					<div id="form_content"><input type="text" id="a_yandere" name="a_yandere" value="<?php echo $happy[0]['a_yandere_tag']?>" class="form_inbox" placeholder="yande.re图床标签"/></div>
 				</div>
 				<div style="height:50px;">
 					<div id="form_title">备注:</div>
