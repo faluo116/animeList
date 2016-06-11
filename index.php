@@ -89,7 +89,7 @@ $happy = $db -> query_sql_result('SELECT * FROM happy WHERE a_tag = 0 ORDER BY a
 		<link href="css/chosen.css" rel="stylesheet"/>
 	</head>
 	<body style="background-color:#E2E2E2;overflow-x:hidden;">
-		<div style="padding:16px;background-color:#FFFFFF;width:900px;height:1000px;margin-left:auto;margin-right:auto;">
+		<div style="padding:16px;background-color:#FFFFFF;width:900px;height:auto;margin-left:auto;margin-right:auto;">
 			<div style="color:#999999;font-weight:bold;font-size:28px;padding-bottom:16px;"><?php echo title();?></div>
 			<div style="line-height:50px;">
 				<span style="float:left;">

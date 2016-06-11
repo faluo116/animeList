@@ -119,6 +119,7 @@ input.form_inbox{
     float:left;
     width:120px;
     text-align:right;
+    color:#656565;
 }
 #form_content{
     float:left;

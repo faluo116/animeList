@@ -47,7 +47,7 @@ if (!is_numeric($pageId)){
         <link href="css/page.css" rel="stylesheet"/>
 	</head>
 	<body style="background-color:#E2E2E2;overflow-x:hidden;">
-		<div style="padding:16px;background-color:#FFFFFF;width:900px;height:1000px;margin-left:auto;margin-right:auto;">
+		<div style="padding:16px;background-color:#FFFFFF;width:900px;height:auto;margin-left:auto;margin-right:auto;">
 			<div style="color:#999999;font-weight:bold;font-size:28px;padding-bottom:16px;"><?php echo title();?></div>
 			<div style="line-height:50px;float:right;"><input type="button" class="btn" value="&nbsp;返&nbsp;回&nbsp;" onclick="location.href='index.php'"/></div>
             <table width="100%" id="order" style="margin-top:20px;margin-bottom:20px;">

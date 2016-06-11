@@ -26,7 +26,7 @@ $housou = get_housou_info();
 		<link href="css/anime.css" rel="stylesheet"/>
 	</head>
 	<body style="background-color:#E2E2E2;overflow-x:hidden;">
-		<div style="padding:16px;background-color:#FFFFFF;width:900px;height:1000px;margin-left:auto;margin-right:auto;">
+		<div style="padding:16px;background-color:#FFFFFF;width:900px;height:auto;margin-left:auto;margin-right:auto;overflow:hidden;zoom:1;">
 			<div style="color:#999999;font-weight:bold;font-size:28px;padding-bottom:16px;"><?php echo title();?></div>
 				<div id="div_form" style="float:left;">
 					<div style="height:50px;">
@@ -85,9 +85,9 @@ $housou = get_housou_info();
 				<div id="div_form" style="float:left;margin-left:120px;">
 				<?php
 					if ("" == $happy[0]['a_cover_img']){
-						echo "<img src=\"/img/260.jpg\" alt=\"img\" style=\"width:260px;height:350px;\">";
+						echo "<img src=\"img/260.jpg\" alt=\"img\" style=\"width:260px;height:350px;\">";
 					} else {
-						echo "<img src=\"/img/" . $happy[0]['a_cover_img'] . "\" alt=\"img\" style=\"width:260px;height:350px;\">";
+						echo "<img src=\"img/" . $happy[0]['a_cover_img'] . "\" alt=\"img\" style=\"width:260px;height:350px;\">";
 					}
 				?>
 				</div>
