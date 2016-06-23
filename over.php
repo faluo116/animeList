@@ -4,14 +4,6 @@ define("TRUE_PATH",__DIR__ . "/");
 require("core/Sqlite.php");
 require("core/Page.php");
 require("functions.php");
-function today(){
-    date_default_timezone_set('PRC');
-	return date('ymd',time());
-}
-function this_week(){
-    date_default_timezone_set('PRC');
-	return date('w');
-}
 $today = today();
 $this_week = this_week();
 $this_week = $this_week == 0 ? 7 : $this_week;

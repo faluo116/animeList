@@ -23,14 +23,6 @@ function checkdb(){
 		$db -> query_sql($ddl_happy);
 	}
 }
-function today(){
-    date_default_timezone_set('PRC');
-	return date('ymd',time());
-}
-function this_week(){
-    date_default_timezone_set('PRC');
-	return date('w');
-}
 checkdb();
 $today = today();
 $this_week = this_week();
@@ -39,19 +31,6 @@ $week = get_week();
 // $housou = get_housou();
 $housou = get_housou_info();
 $db = new Sqlite(TRUE_PATH,'anime.db');
-if (!empty($_POST['a_n'])){
-	$a_n = $_POST['a_n'];
-	if (!is_null($a_n)){
-		// 添加
-		$a_w = $_POST['a_w'];
-		$a_h = $_POST['a_h'];
-		// var_dump($a_w);
-		// var_dump($a_h);
-		$sql = "INSERT INTO happy (a_name,a_week,a_count,a_housou,a_watch,a_tag,a_yandere_tag,a_first,a_step,a_content,a_cover_img) VALUES ('" . $a_n . "'," . $a_w . ",0," . $a_h . ",0,0,'',0,7,'','')";
-		$db -> query_sql($sql);
-		back();
-	}
-}
 if (!empty($_GET['id'])){
 	$id = $_GET['id'];
 	if (!is_null($id) && is_numeric($id)){
@@ -92,26 +71,8 @@ $happy = $db -> query_sql_result('SELECT * FROM happy WHERE a_tag = 0 ORDER BY a
 		<div style="padding:16px;background-color:#FFFFFF;width:900px;height:auto;margin-left:auto;margin-right:auto;">
 			<div style="color:#999999;font-weight:bold;font-size:28px;padding-bottom:16px;"><?php echo title();?></div>
 			<div style="line-height:50px;">
-				<span style="float:left;">
-					<form action="index.php" method="post">
-						<input type="text" id="a_n" name="a_n" class="inbox"/>
-						<select data-placeholder="周" name="a_w" id="a_w" class="chzn-select" style="width:100px;">
-							<option value=""></option>
-							<?php
-								for($i = 1 ; $i < count($week) ; ++$i){
-									echo "<option value=" . $i . ">" . $week[$i] . "</option>";
-								}
-							?>
-						</select>
-						<select data-placeholder="放送" name="a_h" id="a_h" class="chzn-select" style="width:100px;height:100px;">
-							<option value=""></option>
-							<?php
-								for($i = 1 ; $i <= count($housou) ; ++$i){
-									echo "<option value=" . $i . ">" . $housou[$i][0] . "</option>";
-								}
-							?>
-						</select><input type="submit" class="btn" value="&nbsp;保&nbsp;存&nbsp;"/>
-					</form>
+				<span style="float:right;">
+					<input type="button" class="btn_submit" value="&nbsp;增&nbsp;加&nbsp;" onclick="location.href='add.php'"/>
 				</span>
 				<span style="float:right;">
 					<input type="button" class="btn" value="&nbsp;已&nbsp;完&nbsp;结&nbsp;" onclick="location.href='over.php'"/>

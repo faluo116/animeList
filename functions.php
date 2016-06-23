@@ -21,6 +21,9 @@ function get_housou_info(){
 }
 
 function to_chinese_date($d){
+    if (empty($d)){
+        return "尚未观看";
+    }
     $month = substr($d,2,2);
     $date = substr($d,4,2);
     return $month . "月" . $date . "日";
@@ -33,5 +36,15 @@ function back(){
 
 function title(){
     return "Faluo's Bangumi Chart";
+}
+
+function today(){
+    date_default_timezone_set('PRC');
+	return date('ymd',time());
+}
+
+function this_week(){
+    date_default_timezone_set('PRC');
+	return date('w');
 }
 ?>
