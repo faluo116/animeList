@@ -4,23 +4,28 @@ define("TRUE_PATH",__DIR__ . "/");
 require("core/Sqlite.php");
 require("functions.php");
 function checkdb(){
-	$dbpath = TRUE_PATH . 'anime.db';
-	if (!file_exists($dbpath)){
+	$dbpath = TRUE_PATH;
+	if (PHP_OS == 'WINNT'){
+		$dbpath = str_replace("/","\\",$dbpath);
+	} else {
+		$dbpath = str_replace("\\","/",$dbpath);
+	}
+	if (!file_exists($dbpath . 'anime.db')){
 		// 建库建表
 		$ddl_happy = "CREATE TABLE happy (id INTEGER PRIMARY KEY AUTOINCREMENT, 
 		a_name VARCHAR(0,255) DEFAULT (''), 
 		a_week INTEGER DEFAULT (0), 
 		a_count INTEGER DEFAULT (0), 
 		a_housou VARCHAR(0,255) DEFAULT (''), 
-		a_watch INTEGER DEFAULT (0)),
+		a_watch INTEGER DEFAULT (0),
 		a_tag INTEGER DEFAULT (0),
 		a_yandere_tag TEXT DEFAULT (''),
 		a_first INTEGER DEFAULT (0),
 		a_step INTEGER DEFAULT (0),
 		a_content TEXT DEFAULT (''),
-		a_cover_img TEXT DEFAULT ('')";
-		$db = new Sqlite(TRUE_PATH,'anime.db');
-		$db -> query_sql($ddl_happy);
+		a_cover_img TEXT DEFAULT (''))";
+		$db = new Sqlite($dbpath,'anime.db');
+		$db -> create_db($ddl_happy);
 	}
 }
 checkdb();
@@ -37,20 +42,6 @@ if (!empty($_GET['id'])){
 		// 标记
 		$sql = "UPDATE happy SET a_count=a_count+1,a_watch=" . $today . " WHERE id=" . $id;
 		$db -> query_sql($sql);
-		back();
-	}
-}
-if (!empty($_POST['do_sql'])){
-	$do_sql = $_POST['do_sql'];
-	if (!is_null($do_sql)){
-		// 直接执行SQL
-		if ('clear' == $do_sql){
-			// 彻底清表
-			$db -> query_sql('DELETE FROM happy');
-			// $db -> query_sql('update sqlite_sequence set seq=0 where name=\'happy\'');
-		} else {
-			$db -> query_sql($do_sql);
-		}
 		back();
 	}
 }
@@ -81,6 +72,7 @@ $happy = $db -> query_sql_result('SELECT * FROM happy WHERE a_tag = 0 ORDER BY a
             <table width="100%" id="order" style="margin-top:20px;margin-bottom:20px;">
                 <tr align="left">
                     <th id="otd">#</th>
+					<th id="otd">标记</th>
                     <th id="otd">名称</th>
                     <th id="otd">周</th>
                     <th id="otd">集数</th>
@@ -92,29 +84,32 @@ $happy = $db -> query_sql_result('SELECT * FROM happy WHERE a_tag = 0 ORDER BY a
 				if (!is_null($happy)){
 					$c = count($happy);
 					for ($i = 0 ; $i < $c ; ++$i){
-						echo '<tr class="hline">';
-						echo '<td id="otd" align="center">';
-						echo $i + 1;
-						echo '</td>';
-						echo '<td id="otd" align="left">';
 						if ($this_week == $happy[$i]['a_week']){
 							if ($today == $happy[$i]['a_watch']){
 								// 今天看过了
-								echo '<span style="color:#0AA34A;font-weight:bold;">' . $happy[$i]['a_name'] . '</span>';
+								echo '<tr style="background-color:#E1F2CB;">';
 							} else {
 								// 今天没看过
-								echo '<span style="color:#1655A5;font-weight:bold;">' . $happy[$i]['a_name'] . '</span>';
+								echo '<tr style="background-color:#FFFFCC;">';
 							}
 						} else {
 							// 非今天
-							echo $happy[$i]['a_name'];
+							echo '<tr>';
 						}
+						echo '<td id="otd" align="center">';
+						echo $i + 1;
+						echo '</td>';
+						echo '<td id="otd" align="center">';
+						echo '<a href="index.php?id=' . $happy[$i]['id'] . '" class="web">!!!</a>';
+						echo '</td>';
+						echo '<td id="otd" align="left">';
+						echo $happy[$i]['a_name'];
 						echo '</td>';
 						echo '<td id="otd" align="center">';
 						echo $week[$happy[$i]['a_week']];
 						echo '</td>';
 						echo '<td id="otd" align="center">';
-						echo '<a href="index.php?id=' . $happy[$i]['id'] . '" class="web">' . $happy[$i]['a_count'] . '</a>';
+						echo $happy[$i]['a_count'];
 						echo '</td>';
 						echo '<td id="otd" align="center">';
 						echo to_chinese_date($happy[$i]['a_watch']);
@@ -131,12 +126,12 @@ $happy = $db -> query_sql_result('SELECT * FROM happy WHERE a_tag = 0 ORDER BY a
 				}
 			?>
 			</table>
-			<form action="index.php" method="post">
-				<input type="text" id="do_sql" name="do_sql" class="inbox" />
-				<input type="submit" class="btn" value="&nbsp;执&nbsp;行&nbsp;"/>
+			<form action="search.php" method="post">
+				<input type="text" id="do_search" name="do_search" class="inbox" />
+				<input type="submit" class="btn" value="&nbsp;搜&nbsp;索&nbsp;"/>
 			</form>
 		</div>
-		<div style="width:100%;text-align:center;padding:10px;color:#999999;">copyright:faluo[2015]</div>
+		<div style="width:100%;text-align:center;padding:10px;color:#999999;">copyright:faluo[2016]</div>
 	</body>
 	<script type="text/javascript"> $(".chzn-select").chosen({disable_search:true}); </script>
 </html>

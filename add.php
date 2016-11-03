@@ -11,6 +11,10 @@ if (!empty($_GET['up'])){
 	$a_housou = $_POST['a_housou'];
 	$a_week = $_POST['a_week'];
 	$a_count = $_POST['a_count'];
+	if (is_null($a_count) || "" == $a_count){
+		$a_count = 0;
+	}
+	$a_tag = $_POST['a_tag'];
 	$a_yandere_tag = $_POST['a_yandere'];
 	$a_first = $_POST['a_first'];
 	$a_step = $_POST['a_step'];
@@ -32,10 +36,10 @@ if (!empty($_GET['up'])){
 	VALUES 
 	('" . $a_title . "',
 	" . $a_week . ",
-	0,
+	" . $a_count . ",
 	" . $a_housou . ",
 	0,
-	0,
+	" . $a_tag . ",
 	'" . $a_yandere_tag . "',
 	0,
 	7,
@@ -57,6 +61,7 @@ $this_week = $this_week == 0 ? 7 : $this_week;
 		<title>我的番组</title>
 		<link rel="shortcut icon" href="fac.png" />
 		<script src="js/jquery.js" type="text/javascript"></script>
+		<script src="js/ajaxUpload.js" type="text/javascript"></script>
 		<script src="js/chosen.js" type="text/javascript"></script>
 		<script src="js/anime.js" type="text/javascript"></script>
 		<link href="css/anime.css" rel="stylesheet"/>
@@ -114,7 +119,7 @@ $this_week = $this_week == 0 ? 7 : $this_week;
 				</div>
 				<div style="height:50px;">
 					<div id="form_title">图片:</div>
-					<div id="form_content"><input type="text" id="a_cover_img" name="a_cover_img" value="" class="form_inbox" placeholder="封面图260X350"/></div>
+					<div id="form_content"><input type="text" id="a_cover_img" name="a_cover_img" value="" class="form_inbox" readonly="true" onClick="hid('pop')" placeholder="封面图260X350"/></div>
 				</div>
 				<div style="height:50px;">
 					<div id="form_title">yande.re:</div>
@@ -125,12 +130,37 @@ $this_week = $this_week == 0 ? 7 : $this_week;
 					<div id="form_content"><input type="text" id="a_content" name="a_content" value="" class="form_inbox" placeholder="输入备注"/></div>
 				</div>
 				<div style="height:50px;">
+					<div id="form_title">状态:</div>
+					<div id="form_content">
+						<select data-placeholder="状态" name="a_tag" id="a_tag" class="chzn-select" style="width:310px;">
+							<option value=0>放送中</option>
+							<option value=99>已完结</option>
+						</select>
+					</div>
+				</div>
+				<div style="height:50px;">
 					<div id="form_title"><input type="button" class="btn" onclick="location.href='index.php'" value="&nbsp;返&nbsp;回&nbsp;"/></div>
 					<div id="form_content"><input type="button" class="btn_submit" onclick="newAnime()" value="&nbsp;+&nbsp;保&nbsp;存&nbsp;并&nbsp;增&nbsp;加&nbsp;"/></div>
 				</div>
 			</div>
 		</div>
-		<div style="width:100%;text-align:center;padding:10px;color:#999999;">copyright:faluo[2015]</div>
+		<div style="width:100%;text-align:center;padding:10px;color:#999999;">copyright:faluo[2016]</div>
+		<!-- 图片上传弹出层 -->
+		<div id="pop" class="popWindow">
+            <div id="popTitle" class="popTitle">
+                	上传封面
+            </div>
+            <div id="popBody" class="popBody">
+                <div style="padding-left:5px;padding-top:20px;">
+                    <a href="javascript:;" class="inputFile">
+                        <input type="file" name="coverImg" id="coverImg" onchange="upImgTip();"/><snap id="imgTip">+点我选择一张封面</snap>
+                    </a>
+                    <br/></br/>
+                    <input type="button" id="uploadBtn" class="btn_submit" style="font-size:15px;" name="uploadBtn" value="上&nbsp;&nbsp;传" onClick="return fileUpload();" />
+				</div>
+                <div id="popTip" class="popTip">!!封面图尺寸最好限制在260X350。</div>
+            </div>
+        </div>
 	</body>
 	<script type="text/javascript"> $(".chzn-select").chosen(); </script>
 </html>

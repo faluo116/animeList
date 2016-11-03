@@ -10,7 +10,7 @@ $this_week = $this_week == 0 ? 7 : $this_week;
 $week = get_week();
 $housou = get_housou_info();
 $db = new Sqlite(TRUE_PATH,'anime.db');
-$happy = $db -> query_sql_result('select * from happy where a_tag = 99 order by a_week');
+$happy = $db -> query_sql_result('select * from happy where a_tag = 99 order by id desc');
 $pageId = 0;
 // 每页显示15条记录
 $count_pre_page = 15;
@@ -76,6 +76,8 @@ if (!is_numeric($pageId)){
 					echo '</td>';
 					echo '<td id="otd" align="center">';
 					echo '<a href="info.php?id=' . $happy[$i]['id'] . '" class="web" target="_blank">详情</a>';
+					echo '&nbsp;&nbsp;';
+					echo '<a href="modify_old.php?id=' . $happy[$i]['id'] . '" class="web" target="_blank">修改</a>';
 					echo '</td>';
 					echo '</tr>';
 				}
@@ -83,6 +85,6 @@ if (!is_numeric($pageId)){
 			</table>
             <?php echo '<br/>' . $page -> page_str($pageId);?>
 		</div>
-		<div style="width:100%;text-align:center;padding:10px;color:#999999;">copyright:faluo[2015]</div>
+		<div style="width:100%;text-align:center;padding:10px;color:#999999;">copyright:faluo[2016]</div>
 	</body>
 </html>

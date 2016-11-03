@@ -127,3 +127,61 @@ input.form_inbox{
     margin-left:6px;
     height:auto;
 }
+.popWindow{
+    display:none;
+    position:absolute;
+    background-color:#E2E2E2;
+    border:1px solid #000000;
+    width:300px;
+    height:235px;
+    z-index:99999;
+}
+.popTitle{
+    background-color:#FFFFFF;
+    width:290px;
+    height:50px;
+    color:#999999;
+    font-weight:bold;
+    font-size:20px;
+    padding-left:10px;
+    padding-top:25px;
+}
+.popBody{
+    height:160px;
+}
+.popTip{
+    color:#FF0000;
+    font-size:13px;
+    font-style:italic;
+    padding-top:12px;
+    padding-left:5px;
+}
+.inputFile{
+    position:relative;
+    padding:10px 10px;
+    color:#FFFFFF;
+    height:30px;
+    line-height:30px;
+    cursor:pointer;
+    color:#000000;
+    border:0px solid #000000;
+    background-color:#E2E2E2;
+    text-decoration:none;
+    display:inline-block;
+    overflow:hidden;
+}
+.inputFile input{
+    position:absolute;
+    cursor:pointer;
+    opacity:0;
+    width:100%;
+    right:0px;
+    top:0px;
+    padding:15px 10px;
+    filter:alpha(opacity=0);
+    font-size:12px;
+}
+.inputFile:hover{
+    color:#000000;
+    text-decoration:none;
+}

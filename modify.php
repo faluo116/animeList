@@ -55,6 +55,7 @@ $housou = get_housou_info();
 		<title>我的番组</title>
 		<link rel="shortcut icon" href="fac.png" />
 		<script src="js/jquery.js" type="text/javascript"></script>
+		<script src="js/ajaxUpload.js" type="text/javascript"></script>
 		<script src="js/chosen.js" type="text/javascript"></script>
 		<script src="js/anime.js" type="text/javascript"></script>
 		<link href="css/anime.css" rel="stylesheet"/>
@@ -125,7 +126,7 @@ $housou = get_housou_info();
 				</div>
 				<div style="height:50px;">
 					<div id="form_title">图片:</div>
-					<div id="form_content"><input type="text" id="a_cover_img" name="a_cover_img" value="<?php echo $happy[0]['a_cover_img']?>" class="form_inbox" placeholder="封面图260X350"/></div>
+					<div id="form_content"><input type="text" id="a_cover_img" name="a_cover_img" value="<?php echo $happy[0]['a_cover_img']?>" class="form_inbox"  readonly="true" onClick="hid('pop')" placeholder="封面图260X350"/></div>
 				</div>
 				<div style="height:50px;">
 					<div id="form_title">yande.re:</div>
@@ -141,7 +142,23 @@ $housou = get_housou_info();
 				</div>
 			</div>
 		</div>
-		<div style="width:100%;text-align:center;padding:10px;color:#999999;">copyright:faluo[2015]</div>
+		<div style="width:100%;text-align:center;padding:10px;color:#999999;">copyright:faluo[2016]</div>
+		<!-- 图片上传弹出层 -->
+		<div id="pop" class="popWindow">
+            <div id="popTitle" class="popTitle">
+               	 上传封面
+            </div>
+            <div id="popBody" class="popBody">
+                <div style="padding-left:5px;padding-top:20px;">
+                    <a href="javascript:;" class="inputFile">
+                        <input type="file" name="coverImg" id="coverImg" onchange="upImgTip();"/><snap id="imgTip">+点我选择一张封面</snap>
+                    </a>
+                    <br/></br/>
+                    <input type="button" id="uploadBtn" class="btn_submit" style="font-size:15px;" name="uploadBtn" value="上&nbsp;&nbsp;传" onClick="return fileUpload();" />
+				</div>
+                <div id="popTip" class="popTip">!!封面图尺寸最好限制在260X350。</div>
+            </div>
+        </div>	
 	</body>
 	<script type="text/javascript"> $(".chzn-select").chosen(); </script>
 </html>

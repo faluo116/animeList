@@ -40,6 +40,23 @@ private function get_query_result($conn){
   }
 }
 
+public function create_db($sql,$islog = false){
+	if (is_null($this -> path) || is_null($this -> dbname) || is_null($sql)){
+		return '-1';
+	}
+	try {
+		$dbp = $this -> path . $this -> dbname;
+		$conn = new PDO('sqlite:' . $dbp);
+		if ($conn != NULL){
+			echo $sql;
+			$conn -> exec($sql);
+		}
+	} catch (Exception $e){
+		echo $e;
+	}
+    
+}
+
 // 执行一条SQL，无返回结果。(SQL语句，是否输出执行结果)
 public function query_sql($sql,$islog = false){
 	if (is_null($this -> path) || is_null($this -> dbname) || is_null($sql)){

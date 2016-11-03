@@ -34,6 +34,11 @@ function back(){
 	exit();
 }
 
+function backToOld(){
+    header("Location:over.php?p=0");
+	exit();
+}
+
 function title(){
     return "Faluo's Bangumi Chart";
 }
@@ -41,6 +46,11 @@ function title(){
 function today(){
     date_default_timezone_set('PRC');
 	return date('ymd',time());
+}
+
+function timeNow(){
+    date_default_timezone_set('PRC');
+	return date('His',time());
 }
 
 function this_week(){

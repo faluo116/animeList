@@ -93,6 +93,6 @@ $housou = get_housou_info();
 				</div>
 			</div>
 		</div>
-		<div style="width:100%;text-align:center;padding:10px;color:#999999;">copyright:faluo[2015]</div>
+		<div style="width:100%;text-align:center;padding:10px;color:#999999;">copyright:faluo[2016]</div>
 	</body>
 </html>
